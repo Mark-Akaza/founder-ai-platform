@@ -1,10 +1,14 @@
 from sqlalchemy import String,Integer , Column , create_engine,ForeignKey,DateTime
 from datetime import datetime
 from sqlalchemy.orm import sessionmaker,declarative_base
+import os
 
 Base =declarative_base()
 
-engine=create_engine("postgresql+psycopg2://postgres:jojo987%40%40%40@localhost:5432/postgres")
+DATABASE_URL=os.getenv("DATABASE_URL")
+print(DATABASE_URL)
+engine=create_engine(DATABASE_URL)
+print(engine)
 
 class User(Base):
     __tablename__="users"
