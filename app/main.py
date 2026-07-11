@@ -6,12 +6,10 @@ from dataset_model import engine,User
 from passlib.hash import bcrypt
 from jose import jwt
 from datetime import datetime,timedelta
+from app.routers.chat import router as websocket_router
 
 
 SessionLocal=sessionmaker(bind=engine)
-
-
-
 
 key="my-name-is-karam"
 algorithim="HS256"
@@ -32,10 +30,9 @@ def getdb():
     db.close()
 
 
-
-
-
 app=FastAPI()
+
+app.include_router(websocket_router)
 
 @app.get("/")
 def read_root():
@@ -77,6 +74,10 @@ async def websocket_endpoint(websocket:WebSocket):
    while True:
       message=await websocket.receive_text()
       await websocket.send_text(f"you send message:{message}")
+
+
+
+
 
 
 
